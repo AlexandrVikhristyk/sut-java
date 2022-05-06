@@ -6,6 +6,6 @@ import com.example.javaproject.payload.dto.UserDto;
 public interface UserService {
     User createUser(UserDto user);
     User getUserById(Long id);
-    User updateUser(Long userId, User user);
+    User updateUser(Long userId, UserDto user);
     void deleteUser(Long id);
 }

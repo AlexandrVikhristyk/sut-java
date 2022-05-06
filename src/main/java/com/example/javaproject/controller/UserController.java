@@ -10,10 +10,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/user") //Make this controller responsible for specified url path (In local env it will be localhost:8080/api/user for this case)
 public class UserController {
 
+//    @Autowired <- Old way to use IoC in Spring Boot
+//    @Qualifier(name_of_bean) <- Choose the implementation
     private final UserService userService;
+//    private UserService userServiceDI; <- Dependency Inversion approach
 
     public UserController(UserService userService) {
-        this.userService = userService;
+        this.userService = userService; //IoC (Inversion of control) approach
+//        this.userServiceDI = new UserServiceImpl(); Dependency Inversion approach
     }
 
     @GetMapping("/{id}") //GET/POST/PUT...Mapping for specifying responsible endpoint (Fot this case url should look like localhost:8080/api/user/5 {Where 5 is userId})
@@ -34,7 +38,7 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User userDto) {
+    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody UserDto userDto) {
         return ResponseEntity.ok(userService.updateUser(userId, userDto));
     }
 

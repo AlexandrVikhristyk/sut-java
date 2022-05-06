@@ -1,30 +1,28 @@
 package com.example.javaproject.service;
 
 import com.example.javaproject.entity.User;
+import com.example.javaproject.mapper.UserMapper;
 import com.example.javaproject.payload.dto.UserDto;
 import com.example.javaproject.repository.UserRepository;
 import com.example.javaproject.service.interfaces.UserService;
 import org.springframework.stereotype.Service;
 
+//@Primary <- Autowire this implementation any time (Except @Qualifier)
 @Service // Or @Controller or @Component or @Configuration or @Repository or @RestController or @Bean (It works only ahead method);
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
     //C - create
     public User createUser(UserDto userDto) {
 
-        //Here should be mapper
-        User user = new User();
-        user.setName(userDto.getName());
-        user.setUsername(userDto.getUsername());
-        user.setEmail(userDto.getEmail());
-        user.setAge(userDto.getAge());
-        user.setLastname(userDto.getLastname());
+        User user = userMapper.fromDto(userDto);
 
         return userRepository.save(user);
     }
@@ -35,15 +33,11 @@ public class UserServiceImpl implements UserService {
     }
 
     //U - update
-    public User updateUser(Long userId, User user) {
+    public User updateUser(Long userId, UserDto userDto) {
         User userFromDb = getUserById(userId);
 
         //Here should be mapper (Also, we don't want to re-write ID)
-        userFromDb.setName(user.getName());
-        userFromDb.setUsername(user.getUsername());
-        userFromDb.setEmail(user.getEmail());
-        userFromDb.setAge(user.getAge());
-        userFromDb.setLastname(user.getLastname());
+        userMapper.updateUser(userFromDb, userDto);
 
         return userRepository.save(userFromDb);
     }
