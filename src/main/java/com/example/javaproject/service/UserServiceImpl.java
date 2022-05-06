@@ -1,6 +1,7 @@
 package com.example.javaproject.service;
 
 import com.example.javaproject.entity.User;
+import com.example.javaproject.payload.dto.UserDto;
 import com.example.javaproject.repository.UserRepository;
 import com.example.javaproject.service.interfaces.UserService;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,16 @@ public class UserServiceImpl implements UserService {
     }
 
     //C - create
-    public User createUser(User user) {
+    public User createUser(UserDto userDto) {
+
+        //Here should be mapper
+        User user = new User();
+        user.setName(userDto.getName());
+        user.setUsername(userDto.getUsername());
+        user.setEmail(userDto.getEmail());
+        user.setAge(userDto.getAge());
+        user.setLastname(userDto.getLastname());
+
         return userRepository.save(user);
     }
 
