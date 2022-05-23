@@ -2,6 +2,7 @@ package com.example.javaproject.mapper;
 
 import com.example.javaproject.entity.User;
 import com.example.javaproject.payload.dto.UserDto;
+import com.example.javaproject.payload.request.RegisterRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -18,4 +19,6 @@ public interface UserMapper {
 
     @Mapping(target = "id", ignore = true)
     void updateUser(@MappingTarget User user, UserDto userDto);
+
+    User fromDto(RegisterRequest registerRequest);
 }

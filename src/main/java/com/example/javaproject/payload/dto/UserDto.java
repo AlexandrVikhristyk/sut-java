@@ -15,4 +15,5 @@ public class UserDto { //DTO - Data Transfer Object
     private String lastname;
     private String email;
     private Integer age;
+    private String password;
 }

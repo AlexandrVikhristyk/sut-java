@@ -32,6 +32,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found by id - " + id));
     }
 
+    @Override
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found by username - " + username));
+    }
+
     //U - update
     public User updateUser(Long userId, UserDto userDto) {
         User userFromDb = getUserById(userId);
