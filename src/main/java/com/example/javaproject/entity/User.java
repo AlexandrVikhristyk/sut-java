@@ -1,7 +1,5 @@
 package com.example.javaproject.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
 @Entity
@@ -10,14 +8,17 @@ public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String username;
     @Column(name = "firstname", updatable = false) //not required
     private String name;
     private String lastname;
     private String email;
-    @JsonIgnore
     private String password;
     private Integer age; //Integer (Object, Wrapper) - not int (primitive)
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Role role;
 
     public User() {
     }
@@ -85,5 +86,13 @@ public class User {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

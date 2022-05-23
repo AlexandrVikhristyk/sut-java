@@ -6,6 +6,7 @@ import com.example.javaproject.payload.dto.UserDto;
 import com.example.javaproject.repository.UserRepository;
 import com.example.javaproject.service.interfaces.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 //@Primary <- Autowire this implementation any time (Except @Qualifier)
 @Service // Or @Controller or @Component or @Configuration or @Repository or @RestController or @Bean (It works only ahead method);
@@ -28,6 +29,7 @@ public class UserServiceImpl implements UserService {
     }
 
     //R - read
+    @Transactional(readOnly = true)
     public User getUserById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found by id - " + id));
     }
